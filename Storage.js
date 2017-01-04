@@ -9,31 +9,34 @@ module.exports = {
     Devices: {},
 
     saveDevice: function(device) {                          //toestel opslagen in locale datastore 'dal'
-        this.devices[device.id] = device;                   
+        this.Devices[device.id] = device;                   
     },
     AllDevices: function() {                                //alle toestellen weergeven
         var rtnValue = [];
-        for (var item in this.devices) {
-            rtnValue.push(this.devices[item]);
+        for (var item in this.Devices) {
+            rtnValue.push(this.Devices[item]);
         };
         return rtnValue;
     },
     findDevice: function(id) {                              //toestel opzoeken
-        return this.devices[id];
+        return this.Devices[id];
     },
     
     
     Alarms: {}, 
 
     saveAlarm: function(alarm) {                            //alarm opslagen in datastore 'dal'
-        this.alarms[alarm.id] = alarm;  
+        this.Alarms[alarm.id] = alarm;  
     },
     AllAlarms: function() {                                 //alle alarmen weergeven
         var rtnValue = [];
-        for (var item in this.alarms) {
-            rtnValue.push(this.alarms[item]);
+        for (var item in this.Alarms) {
+            rtnValue.push(this.Alarms[item]);
         };
         return rtnValue;
+    },
+    findAlarm: function(id) {                               //alarm opzoeken in de gehele lijst
+        return this.Alarms[id];
     },
 
     
