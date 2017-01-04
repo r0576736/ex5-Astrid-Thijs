@@ -15,6 +15,10 @@ var validation = require("./Validate.js");
 var app = express();
 app.use(parser.json());
 
+
+
+//Devices
+
 app.get("/Devices", function(request, response) {
     response.send(dal.AllDevices());
 });
@@ -53,6 +57,27 @@ app.post("/Devices", function(request, response) {
     dal.saveDevice(device);
     response.status(201).location("../devices/" + device.id).send();
 });
+
+
+
+//Alarms
+
+app.get("/alarms", function(request, response) {
+    response.send(dal.AllAlarms());
+});
+
+app.get("/alarms/:id", function(request, response) {
+    var device = dal.findAlarm(request.params.id);
+    if (device) {
+        response.send(device);
+    } else {
+        response.status(404).send();
+    }
+});
+
+
+
+
 
 
 console.log("Hello World");
