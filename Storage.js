@@ -36,7 +36,6 @@ module.exports = {
         return rtnValue;
     },
 
-    },
     
     
     WhiteLists: {},
