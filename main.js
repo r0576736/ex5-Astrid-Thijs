@@ -128,7 +128,7 @@ app.post("/WhiteLists", function(request, response) {                           
         return;                                                                 //record van WhiteList toevoegen
     }
 
-    whitelist.id = uuid.v4();                                                //automatisch unieke id geven
+    whitelist.id = uuid.v4();                                                   //automatisch unieke id geven
     dal.saveWhiteList(whitelist);                                               //opslagen in datastore 'dal'
     response.status(201).location("../WhiteLists/" + whitelist.id).send();      //toestel weergeven en status 201 teruggeven, ok
 });
