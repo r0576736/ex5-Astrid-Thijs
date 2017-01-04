@@ -42,7 +42,7 @@ app.post("/Devices", function(request, response) {                              
     }
 
    
-    var existingDevice = dal.findDevice(device.mac_address_device);             //bestaand toestel opzoeken
+    var existingDevice = dal.findDevice(device.mac_address_device);                             //bestaand toestel opzoeken
     if (existingDevice) {       
         response.status(409).send({                                             //bestaat het al? bericht sturen dat het al bestaat
             message: "id must be unique, it's already registered",
@@ -117,9 +117,18 @@ app.post("/WhiteLists", function(request, response) {                           
             message: "Following field(s) are mandatory:" + errors.concat()  
         });
         return;                                                                 //record toevoegen
+    }    
+    
+    var existingWhiteList = dal.findWhiteList(whitelist.mac_address_device);                    //bestaand record opzoeken in WhiteLists
+    if (existingWhiteList) {       
+        response.status(409).send({                                             //bestaat het al? bericht sturen dat het al bestaat
+            message: "id must be unique, it's already registered",
+            link: "../Alarms/" + existingWhiteList.id                         
+        });
+        return;                                                                 //record van WhiteList toevoegen
     }
 
-    whitelist.id = uuid.v4();                                                   //automatisch unieke id geven
+    whitelist.id = uuid.v4();                                                //automatisch unieke id geven
     dal.saveWhiteList(whitelist);                                               //opslagen in datastore 'dal'
     response.status(201).location("../WhiteLists/" + whitelist.id).send();      //toestel weergeven en status 201 teruggeven, ok
 });
