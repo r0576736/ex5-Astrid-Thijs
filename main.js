@@ -26,10 +26,14 @@ var Device = function(id, mac_address, time_captured, distance){
 
 var devices = [new Device(1, "88.24.22", "14:28", 180)];
 
-app.get("/devices", function(request, response){
+app.get('/devices', function(request, response){
         response.send(devices);
 });
 
+app.post('/devices', function(request, response){
+    var device = new Device(teller++, request.body.id, request.body.mac_address, request.body.time_captured, request.body.distance);
+    devices.push(device);
+});
 
 console.log("Hello World");
 app.listen(1234);
