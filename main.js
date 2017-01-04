@@ -8,7 +8,8 @@
 var express = require('express');
 var parser = require('body-parser');
 
-var dal = require("./storage.js");
+var dal = require("./Storage.js");
+var validation = require("./Validate.js");
 
 var app = express();
 app.use(parser.json());
@@ -27,8 +28,17 @@ app.get("/devices/:id", function(request, response) {
 });
 
 app.post("/devices", function(request, response) {
-    // only data that matches with the variable 
     var device = request.body;
+
+    var errors = validation.fieldsNotEmpty(device, "mac_address", "time_captured", "distance");
+    if (errors) {
+        response.status(400).send({
+            message: "Following field(s) are mandatory:" + errors.concat()
+        });
+        return;
+    }
+
+   
     var existingDevice = dal.findDevice(device.mac_address_device);
     if (existingDevice) {
         response.status(409).send({
@@ -37,6 +47,8 @@ app.post("/devices", function(request, response) {
         });
         return;
     }
+
+
     dal.saveDevice(device);
     response.status(201).location("../devices/" + device.id).send();
 });
