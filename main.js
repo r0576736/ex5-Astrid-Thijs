@@ -76,6 +76,20 @@ app.get("/alarms/:id", function(request, response) {
 });
 
 
+app.post("/alarms", function(request, response) { 
+    var alarm = request.body;
+    var errors = validation.fieldsNotEmpty(alarm, "name_drone", "location", "type_alarm", "time_alarm", "notification", "type_notification", "important_alarm");
+    if (errors) {
+        response.status(400).send({
+            message: "Following field(s) are mandatory:" + errors.concat()
+        });
+        return;
+    }
+
+    alarm.id = uuid.v4();
+    dal.saveAlarm(alarm);
+    response.status(201).location("../alarms/" + alarm.id).send();
+});
 
 
 
