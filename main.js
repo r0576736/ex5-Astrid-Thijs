@@ -8,32 +8,40 @@
 var express = require('express');
 var parser = require('body-parser');
 
+var dal = require("./storage.js");
+
 var app = express();
 app.use(parser.json());
 
 app.get("/", function(request, response) {
-    response.send("Hello World");
+    response.send(dal.AllDevices());
 });
 
-var teller = 3; 
-
-var Device = function(id, mac_address, time_captured, distance){
-        this.id = id;
-        this.mac_address = mac_address;
-        this.time_captured = time_captured;
-        this.distance = distance;
-};
-
-var devices = [new Device(1, "88.24.22", "14:28", 180)];
-
-app.get('/devices', function(request, response){
-        response.send(devices);
+app.get("/devices/:id", function(request, response) {
+    var device = dal.findDevice(request.params.id);
+    if (device) {
+        response.send(device);
+    } else {
+        response.status(404).send();
+    }
 });
 
-app.post('/devices', function(request, response){
-    var device = new Device(teller++, request.body.id, request.body.mac_address, request.body.time_captured, request.body.distance);
-    devices.push(device);
+app.post("/devices", function(request, response) {
+    // only data that matches with the variable 
+    var device = request.body;
+    var existingDevice = dal.findDevice(device.mac_address_device);
+    if (existingDevice) {
+        response.status(409).send({
+            message: "id must be unique, it's already registered",
+            link: "../devices/" + existingDevice.id
+        });
+        return;
+    }
+    dal.saveDevice(device);
+    response.status(201).location("../devices/" + device.id).send();
 });
+
 
 console.log("Hello World");
 app.listen(1234);
+
