@@ -4,6 +4,7 @@ Genzo Vandervelden heeft met geholpen bij de code.
 
 Storage:  
   Hierin zit de data opgeslagen van de 3 resources:
+  
     saveDevice  = Toestel opslagen
     AllDevices  = Alle toestellen opvragen
     findDevice  = Een toestel opzoeken
@@ -15,6 +16,7 @@ Storage:
     saveWhiteList = record opslagen in 'WhiteLists'
     AllWhiteLists = lijst weergeven van alle records in 'WhiteLists'
     findWhiteList = een record opzoeken in 'WhiteLists'
+
 
 Validate:
   Hier wordt de data gevalideerd. Velden mogen niet leeg zijn. 
