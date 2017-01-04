@@ -123,7 +123,7 @@ app.post("/WhiteLists", function(request, response) {                           
     if (existingWhiteList) {       
         response.status(409).send({                                             //bestaat het al? bericht sturen dat het al bestaat
             message: "id must be unique, it's already registered",
-            link: "../Alarms/" + existingWhiteList.id                         
+            link: "../WhiteList/" + existingWhiteList.id                         
         });
         return;                                                                 //record van WhiteList toevoegen
     }
