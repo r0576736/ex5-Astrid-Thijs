@@ -36,8 +36,6 @@ module.exports = {
         return rtnValue;
     },
 
-    findAlarm: function(id) {                               //een alarm opzoeken
-        return this.alarms[id];
     },
     
     
