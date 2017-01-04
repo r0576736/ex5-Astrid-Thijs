@@ -7,6 +7,7 @@
 
 var express = require('express');
 var parser = require('body-parser');
+var uuid = require('uuid'); 
 
 var dal = require("./Storage.js");
 var validation = require("./Validate.js");
@@ -14,11 +15,11 @@ var validation = require("./Validate.js");
 var app = express();
 app.use(parser.json());
 
-app.get("/", function(request, response) {
+app.get("/Devices", function(request, response) {
     response.send(dal.AllDevices());
 });
 
-app.get("/devices/:id", function(request, response) {
+app.get("/Devices/:id", function(request, response) {
     var device = dal.findDevice(request.params.id);
     if (device) {
         response.send(device);
@@ -27,7 +28,7 @@ app.get("/devices/:id", function(request, response) {
     }
 });
 
-app.post("/devices", function(request, response) {
+app.post("/Devices", function(request, response) {
     var device = request.body;
 
     var errors = validation.fieldsNotEmpty(device, "mac_address", "time_captured", "distance");
@@ -48,7 +49,7 @@ app.post("/devices", function(request, response) {
         return;
     }
 
-
+    device.id = uuid.v4();
     dal.saveDevice(device);
     response.status(201).location("../devices/" + device.id).send();
 });
