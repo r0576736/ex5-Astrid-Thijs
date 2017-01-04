@@ -7,9 +7,9 @@
 
 module.exports = {
 
-  fieldsNotEmpty: function (object) {
-    var errors = [];
-    for (i = 1; i < arguments.length; i++) {
+  fieldsNotEmpty: function (object) {                           //velden mogen niet leeg zijn
+    var errors = [];                                            //error weergeven
+    for (i = 1; i < arguments.length; i++) {    
       if (!this.fieldNotEmpty(object, arguments[i])) {
         errors.push(arguments[i]);
       }
@@ -18,13 +18,13 @@ module.exports = {
     return errors.length === 0 ? null : errors;
   },
 
-  fieldNotEmpty: function (object, field) {
+  fieldNotEmpty: function (object, field) {                     //veld mag niet leeg zijn
     return object && object[field] && object[field] !== "";
   },
 
-  fieldCorrectType: function() {
+  fieldCorrectType: function() {                                //velden moeten juist type hebben
 
   }
 };
 
-console.log("Validate check");
+console.log("Validate check");                                  //checken of validatie werkt
